@@ -6,7 +6,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
-public class MainActivity extends AppCompatActivity implements MainActivityFragment.OnButtonClick ,
+public class MainActivity extends AppCompatActivity implements ExamDetails.OnButtonClick,MainActivityFragment.OnItemClick ,
         MainDisplayFragment.OnButton2Click,MainDisplayFragment.OnButton3Click {
 
     @Override
@@ -23,10 +23,23 @@ public class MainActivity extends AppCompatActivity implements MainActivityFragm
                     .commit();
         }
     }
+    @Override
+    public void onButtonClick() {
+        MainActivityFragment2 fragment2 =
+                MainActivityFragment2.newInstance();
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.root_layout, fragment2, "Details2")
+                .addToBackStack(null)
+                .commit();
+    }
         @Override
-        public void onButtonClick() {
-            final MainActivityFragment2 fragment2 =
-                    MainActivityFragment2.newInstance();
+        public void onItemClick(String Exams) {
+            final ExamDetails fragment2 =
+                    ExamDetails.newInstance();
+            Bundle bundle = new Bundle();
+            bundle.putString("key", Exams);
+            fragment2.setArguments(bundle);
             getSupportFragmentManager()
                     .beginTransaction()
                     .replace(R.id.root_layout, fragment2, "Details")

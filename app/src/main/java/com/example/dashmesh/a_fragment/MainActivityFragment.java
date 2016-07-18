@@ -11,7 +11,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.TextView;
 
 /**
@@ -24,10 +23,10 @@ public class MainActivityFragment extends Fragment {
     //empty constructor
     }
 
-    public interface OnButtonClick {
-        void onButtonClick();
+    public interface OnItemClick {
+        void onItemClick(String Exams);
     }
-    private OnButtonClick mListener;
+    private OnItemClick mListener;
 
     public static MainActivityFragment newInstance() {
         return new MainActivityFragment();
@@ -37,8 +36,8 @@ public class MainActivityFragment extends Fragment {
     public void onAttach(Context context) {
         super.onAttach(context);
 
-        if (context instanceof OnButtonClick) {
-            mListener = (OnButtonClick) context;
+        if (context instanceof OnItemClick) {
+            mListener = (OnItemClick) context;
         } else {
             throw new ClassCastException(context.toString() + " must implement OnRageComicSelected.");
         }
@@ -62,15 +61,6 @@ public class MainActivityFragment extends Fragment {
         recyclerView.setLayoutManager(new GridLayoutManager(activity, 1));
         recyclerView.setAdapter(new ExamAdapter(activity));
 
-
-        Button btn = (Button) rootView.findViewById(R.id.button);
-        btn.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View arg0) {
-                mListener.onButtonClick();
-                }
-        });
         return rootView;
     }
 
@@ -94,12 +84,12 @@ public class MainActivityFragment extends Fragment {
             final String exams = Exams[position];
 
             viewHolder.setData(exams);
-            //viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
-              //  @Override
-               // public void onClick(View v) {
-                //    mListener.onRageComicSelected();
-              //  }
-          //  });
+            viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mListener.onItemClick(exams);
+                }
+            });
         }
 
         @Override
