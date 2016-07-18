@@ -6,7 +6,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
-public class MainActivity extends AppCompatActivity implements MainActivityFragment.OnButtonClick {
+public class MainActivity extends AppCompatActivity implements MainActivityFragment.OnButtonClick ,
+        MainDisplayFragment.OnButton2Click,MainDisplayFragment.OnButton3Click {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -18,7 +19,7 @@ public class MainActivity extends AppCompatActivity implements MainActivityFragm
         if (savedInstanceState == null) {
             getSupportFragmentManager()
                     .beginTransaction()
-                    .add(R.id.root_layout, MainActivityFragment.newInstance(), "rageComicList")
+                    .add(R.id.root_layout, MainDisplayFragment.newInstance(), "rageComicList")
                     .commit();
         }
     }
@@ -32,6 +33,26 @@ public class MainActivity extends AppCompatActivity implements MainActivityFragm
                     .addToBackStack(null)
                     .commit();
         }
+    @Override
+    public void onButton2Click() {
+        final MainActivityFragment fragment =
+                MainActivityFragment.newInstance();
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.root_layout, fragment, "exam")
+                .addToBackStack(null)
+                .commit();
+    }
+    @Override
+    public void onButton3Click() {
+         MainActivityFragment2 fragment2 =
+                MainActivityFragment2.newInstance();
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.root_layout, fragment2, "Details2")
+                .addToBackStack(null)
+                .commit();
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
